@@ -75,5 +75,5 @@ app.use('/api/statistik', statsRoutes);
 // });
 
 app.listen(8800, () => {
-  console.log('Connected!');
+  console.log('Server Connected! 8800');
 });
