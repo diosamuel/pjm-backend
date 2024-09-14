@@ -61,8 +61,8 @@ const compressImages = async (req, res, next) => {
 router.get('/', getSemuaKatalogServe);
 router.get('/:id', getKatalogIdServe);
 router.get('/kategori/:kategori', getKatalogKategoriServe);
-router.post('/', upload.array('img', 5), compressImages, tambahKatalogServe);
+router.post('/', upload.array('img', 5), tambahKatalogServe);
 router.delete('/:id', hapusKatalogServe);
-router.put('/:id', upload.array('img', 5), compressImages, updateKatalogServe);
+router.put('/:id', upload.array('img', 5), updateKatalogServe);
 
 module.exports = router;

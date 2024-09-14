@@ -22,7 +22,7 @@ const dbQuery = (query, params) => {
 
 const getSemuaKatalogDB = async (kategori) => {
   let q =
-    'SELECT k.id, k.nama, k.deskripsi, k.img, k.img2, k.img3, k.img4, k.img5, k.stok, k.harga, k.diskon, k.warna, k.berat, k.created_at, k.updated_at, kat.nama AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id';
+    'SELECT k.* AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id';
   if (kategori) {
     q = q + ' WHERE kat.nama = ?;';
   }
@@ -31,13 +31,13 @@ const getSemuaKatalogDB = async (kategori) => {
 
 const getKatalogIdDB = async (id) => {
   const q =
-    'SELECT k.id, k.nama, k.deskripsi, k.img, k.img2, k.img3, k.img4, k.img5, k.stok, k.harga, k.diskon, k.warna, k.berat, k.created_at, k.updated_at, kat.nama AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id WHERE k.id = ?';
+    'SELECT k.* AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id WHERE k.id = ?';
   return await dbQuery(q, [id]);
 };
 
 const tambahKatalogDB = async (values) => {
   const q = await dbQuery(
-    'INSERT INTO katalog(`nama`, `deskripsi`, `img`, `img2`,`img3`,`img4`,`img5`, `kategori`,`stok`,`harga`,`diskon`, `warna`,`berat`,`created_at`) VALUES (?)',
+    'INSERT INTO katalog(`nama`, `deskripsi`, `img`, `img2`,`img3`,`img4`,`img5`, `kategori`,`stok`,`harga`,`diskon`, `warna`,`berat`,`lazada`,`shopee`,`tokopedia`,`created_at`) VALUES (?)',
     [values]
   );
   return q;
@@ -53,7 +53,7 @@ const hapusKatalogDB = async (id) => {
 
 const updateKatalogDB = async (values, id) => {
   const q =
-    'UPDATE katalog SET `nama`=?,`deskripsi`=?,`img`=?,`img2`=?,`img3`=?,`img4`=?,`img5`=?,`kategori`=?,`stok`=?,`harga`=?,`diskon`=?,`warna`=?,`berat`=?,`updated_at`=? WHERE `id` = ?';
+    'UPDATE katalog SET `nama`=?,`deskripsi`=?,`img`=?,`img2`=?,`img3`=?,`img4`=?,`img5`=?,`kategori`=?,`stok`=?,`harga`=?,`diskon`=?,`warna`=?,`berat`=?,`lazada`=?,`shopee`=?,`tokopedia`=?,`updated_at`=? WHERE `id` = ?';
   return await dbQuery(q, [...values, id]);
 };
 
@@ -125,6 +125,9 @@ async function tambahKatalogServe(req, res) {
       req.body.diskon,
       req.body.warna,
       req.body.berat,
+      req.body.lazada,
+      req.body.shopee,
+      req.body.tokopedia,
       created_at,
     ];
 
@@ -143,6 +146,9 @@ async function tambahKatalogServe(req, res) {
         harga,
         warna,
         berat,
+        lazada,
+        shopee,
+        tokopedia,
         created_at,
       ] = values;
       return res.status(200).json(
@@ -157,6 +163,11 @@ async function tambahKatalogServe(req, res) {
           kategori,
           stok,
           harga,
+          warna,
+          berat,
+          lazada,
+          shopee,
+          tokopedia,
           created_at,
         })
       );
@@ -210,6 +221,9 @@ async function updateKatalogServe(req, res) {
       req.body.diskon,
       req.body.warna,
       req.body.berat,
+      req.body.lazada,
+      req.body.shopee,
+      req.body.tokopedia,
       updated_at,
     ];
 
@@ -232,6 +246,9 @@ async function updateKatalogServe(req, res) {
         harga,
         warna,
         berat,
+        lazada,
+        shopee,
+        tokopedia,
         created_at,
       ] = values;
       return res.status(200).json(
@@ -246,6 +263,9 @@ async function updateKatalogServe(req, res) {
           kategori,
           stok,
           harga,
+          lazada,
+          shopee,
+          tokopedia,
           created_at,
         })
       );
