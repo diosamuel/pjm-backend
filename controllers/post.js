@@ -22,7 +22,7 @@ const dbQuery = (query, params) => {
 
 const getSemuaKatalogDB = async (kategori) => {
   let q =
-    'SELECT k.* AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id';
+    'SELECT k.*, kat.nama AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id';
   if (kategori) {
     q = q + ' WHERE kat.nama = ?;';
   }
@@ -31,7 +31,7 @@ const getSemuaKatalogDB = async (kategori) => {
 
 const getKatalogIdDB = async (id) => {
   const q =
-    'SELECT k.* AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id WHERE k.id = ?';
+    'SELECT k.*, kat.nama AS kategori FROM katalog k INNER JOIN kategori kat ON k.kategori = kat.id WHERE k.id = ?';
   return await dbQuery(q, [id]);
 };
 
