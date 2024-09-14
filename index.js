@@ -55,6 +55,9 @@ app.post("/api/upload", upload.single("file"), function (req, res) {
   res.status(200).json(file.filename);
 });
 
+app.get('/',(req,res)=>{
+  res.send("ON")
+})
 app.use('/api/auth', authRoutes);
 // app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);

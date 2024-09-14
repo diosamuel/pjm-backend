@@ -34,7 +34,7 @@ const compressImages = async (req, res, next) => {
       req.files.map(async (file) => {
         const inputPath = file.path;
         const outputPath = `/home/diosamue/public_html/images/compress_${file.filename}`;
-        await sharp(inputPath).jpeg({ quality: 50 }).toFile(outputPath);
+        await sharp(inputPath).jpeg({ quality: 70 }).toFile(outputPath);
 
         setTimeout(()=>{
         fs.unlink(inputPath, (err) => {
@@ -61,8 +61,8 @@ const compressImages = async (req, res, next) => {
 router.get('/', getSemuaKatalogServe);
 router.get('/:id', getKatalogIdServe);
 router.get('/kategori/:kategori', getKatalogKategoriServe);
-router.post('/', upload.array('img', 5), tambahKatalogServe);
+router.post('/', upload.array('img', 5), compressImages, tambahKatalogServe);
 router.delete('/:id', hapusKatalogServe);
-router.put('/:id', upload.array('img', 5), updateKatalogServe);
+router.put('/:id', upload.array('img', 5), compressImages, updateKatalogServe);
 
 module.exports = router;
