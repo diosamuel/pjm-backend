@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:1337',"https://pardijayamotor.com","https://dashboard.pardijayamotor.com","https://pjm-two.vercel.app","https://pjm-dashboard.vercel.app"],
+    origin: ['http://localhost:3000', 'http://localhost:1337',"https://pardijayamotor.com","https://dashboard.pardijayamotor.com"],
     credentials: true,
   })
 );
