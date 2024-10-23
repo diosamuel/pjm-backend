@@ -290,7 +290,7 @@ async function hapusKatalogServe(req, res) {
 
       barangArray.forEach((inputPath) => {
         if (inputPath) {
-          const outputPath = `${process.env.IMAGEFOLDER}${inputPath}`;
+          const outputPath = path.join(__dirname, `${process.env.IMAGEFOLDER}${inputPath}`);
           // setTimeout(() => 
             fs.unlinkSync(outputPath)
           // , 1000);
