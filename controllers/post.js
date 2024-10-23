@@ -109,7 +109,7 @@ async function tambahKatalogServe(req, res) {
   if (payload) {
     const files = req.files;
 
-    let imageFiles = files.map((x) => `compress_${x.filename}`);
+    let imageFiles = files.map((x) => `${x.filename}`);
     if (imageFiles.length < 5) {
       imageFiles = [...imageFiles, ...new Array(5 - imageFiles.length)];
     }
@@ -192,20 +192,20 @@ async function updateKatalogServe(req, res) {
 
     barangArray.forEach((inputPath) => {
       if (inputPath) {
-        const outputPath = path.join(__dirname, `/home/diosamue/public_html/images/${inputPath}`);
+        const outputPath = path.join(__dirname, `${process.env.IMAGEFOLDER}${inputPath}`);
 
-        setTimeout(async () => {
+        // setTimeout(async () => {
           if (fs.existsSync(outputPath)) {
             fs.unlinkSync(outputPath);
           } else {
             console.error(`File not found: ${outputPath}`);
           }
-        }, 1000);
+        // }, 1000);
       }
     });
 
     const { files } = req;
-    let imageFiles = files.map((file) => `compress_${file.filename}`);
+    let imageFiles = files.map((file) => `${file.filename}`);
     if (imageFiles.length < 5) {
       imageFiles = [...imageFiles, ...new Array(5 - imageFiles.length)];
     }
@@ -290,8 +290,10 @@ async function hapusKatalogServe(req, res) {
 
       barangArray.forEach((inputPath) => {
         if (inputPath) {
-          const outputPath = `./public/image/${inputPath}`;
-          setTimeout(() => fs.unlinkSync(outputPath), 1000);
+          const outputPath = `${process.env.IMAGEFOLDER}${inputPath}`;
+          // setTimeout(() => 
+            fs.unlinkSync(outputPath)
+          // , 1000);
         }
       });
 
@@ -301,7 +303,7 @@ async function hapusKatalogServe(req, res) {
       }
       return res.status(200).json(barang);
     } catch (err) {
-      res.status(500).json('Error saat menghapus barang');
+      res.status(500).json({err});
     }
   }
 }
