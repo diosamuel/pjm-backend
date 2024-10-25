@@ -10,12 +10,14 @@ const {
   updateKatalogServe,
   getKatalogKategoriServe,
 } = require('../controllers/post.js');
+const path = require('path');
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, process.env.IMAGEFOLDER);
+    const outputPath = path.join(__dirname, `${process.env.IMAGEFOLDER}`);
+    cb(null, outputPath);
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
